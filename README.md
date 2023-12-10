@@ -1,5 +1,15 @@
-# Joplin Plugin
+# Joplin Zotero Link Plugin
 
-This is your new Joplin plugin. It is suggested that you use this README file to document your plugin.
+Conntect Zotero with Joplin to reference sources in notes and open them via `zotero://` links.
 
-For information on how to build or publish the plugin, please see [GENERATOR_DOC.md](./GENERATOR_DOC.md)
+## Installation
+
+1. Install [ZotServer](https://github.com/MunGell/ZotServer) in Zotero
+2. Install this plugin
+
+## Usage
+
+1. Open a note and enter `z@`
+2. Search for your reference
+3. Select it
+
