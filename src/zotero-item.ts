@@ -10,29 +10,29 @@ export class ZoteroItem {
 
     constructor(item) {
       this.key = item.key;
-      this.title = item.title;
-      this.date = item.date;
+      this.title = item.title || '';
+      this.date = item.date || '';
       this.creators = ZoteroItem.parseCreators(item.creators);
-  
+
       this.titleL = this.title ? item.title.toLowerCase() : '';
       this.creatorsL = this.creators.toLowerCase();
     }
-  
+
     static parseCreators(creators) {
       if (!creators) return '';
       return creators.filter(c => c.creatorType === 'author')
                      .map(c => `${c.firstName} ${c.lastName}`)
                      .join(', ');
     }
-  
+
     matches(query) {
       if (!query) return true;
-      
+
       return this.match(query, this.titleL) ||
              this.match(query, this.date) ||
              this.match(query, this.creatorsL)
     }
-  
+
     match(query, value) {
       return value ? value.indexOf(query) >= 0 : false;
     }
