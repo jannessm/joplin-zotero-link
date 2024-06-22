@@ -6,7 +6,8 @@ Conntect Zotero with Joplin to reference sources in notes and open them via `zot
 
 ### Zotero >= 7
 
-Just install this plugin.
+1. Enable "Local API" feature in your Zotero 7 settings: `Zotero 7 > Settings > Advanced > Allow other applications on this computer to communicate with Zotero`
+2. Install this plugin
 
 ### Zotero <= 6
 
