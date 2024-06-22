@@ -87,30 +87,56 @@ export class ZoteroQuery {
     }
 
     async loadData() {
+        let data;
+
         try {
-            const res = await fetch(`http://localhost:23119/zotserver/search`, {
-                method: 'post',
+            const query = new URLSearchParams({
+                itemType: '-attachment',
+                q: query
+            }).toString();
+
+            const res = await fetch(`http://localhost:23119/api/user/0/items?${query}`, {
+                method: 'get',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify([{
-                    condition: 'quicksearch-everything',
-                    value: ''
-                }])
+                }
             });
-    
-            let data = await res.json();
-            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
-                       .map(item => new ZoteroItem(item));
+
+            data = await res.json();
+
+        } catch (e) { }
+
+        // zotero api is not working. Try to use zotserver
+        if (!data) {
+            try {
+                const res = await fetch(`http://localhost:23119/zotserver/search`, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify([{
+                        condition: 'quicksearch-everything',
+                        value: ''
+                    }])
+                });
+        
+                data = await res.json();
+            } catch (e) {
+                this.context.postMessage({
+                    title: 'Zotero not found',
+                    description: 'Could not connect with Zotero. Is it running?'
+                });
+            }
+        }
+
+        if (!!data) {
             
+            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
+            .map(item => new ZoteroItem(item));
+ 
             data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
                     
             return data;
-        } catch (e) {
-            this.context.postMessage({
-                title: 'Zotero not found',
-                description: 'Could not connect with Zotero. Is it running?'
-            });
         }
     }
 }
