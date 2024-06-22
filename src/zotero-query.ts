@@ -92,7 +92,7 @@ export class ZoteroQuery {
         try {
             const query = new URLSearchParams({
                 itemType: '-attachment',
-                q: query
+                q: ''
             }).toString();
 
             const res = await fetch(`http://localhost:23119/api/user/0/items?${query}`, {

@@ -4,6 +4,12 @@ Conntect Zotero with Joplin to reference sources in notes and open them via `zot
 
 ## Installation
 
+### Zotero >= 7
+
+Just install this plugin.
+
+### Zotero <= 6
+
 1. Install [ZotServer](https://github.com/MunGell/ZotServer) in Zotero
 2. Install this plugin
 
@@ -12,4 +18,3 @@ Conntect Zotero with Joplin to reference sources in notes and open them via `zot
 1. Open a note and enter `z@`
 2. Search for your reference
 3. Select it
-
