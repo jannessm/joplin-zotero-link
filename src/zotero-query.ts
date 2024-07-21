@@ -95,7 +95,7 @@ export class ZoteroQuery {
                 q: ''
             }).toString();
 
-            const res = await fetch(`http://localhost:23119/api/user/0/items?${query}`, {
+            const res = await fetch(`http://localhost:23119/api/users/0/items?${query}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json'
