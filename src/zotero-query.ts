@@ -131,8 +131,7 @@ export class ZoteroQuery {
 
         if (!!data) {
             
-            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
-            .map(item => new ZoteroItem(item));
+            data = data.filter(item => item.data.itemType !== 'attachment' && item.data.itemType !== 'note').map(item => new ZoteroItem(item.data));
  
             data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
                     
