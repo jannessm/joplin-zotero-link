@@ -95,7 +95,7 @@ export class ZoteroQuery {
                 q: ''
             }).toString();
 
-            const res = await fetch(`http://localhost:23119/api/user/0/items?${query}`, {
+            const res = await fetch(`http://localhost:23119/api/users/0/items?${query}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json'
@@ -131,8 +131,7 @@ export class ZoteroQuery {
 
         if (!!data) {
             
-            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
-            .map(item => new ZoteroItem(item));
+            data = data.filter(item => item.data.itemType !== 'attachment' && item.data.itemType !== 'note').map(item => new ZoteroItem(item.data));
  
             data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
                     
