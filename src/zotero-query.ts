@@ -1,3 +1,4 @@
+import { SETTING } from "./settings";
 import { ZoteroItem } from "./zotero-item";
 
 interface ChangePos {
@@ -87,55 +88,70 @@ export class ZoteroQuery {
     }
 
     async loadData() {
+        const settings = await this.context.postMessage('getSettings');
+
         let data;
 
-        try {
-            const query = new URLSearchParams({
-                itemType: '-attachment',
-                q: ''
-            }).toString();
+        data = await this.tryZotero7(settings.port);
 
-            const res = await fetch(`http://localhost:23119/api/users/0/items?${query}`, {
+        // zotero api is not working. Try to use zotserver
+        if (!data) {
+            data = await this.tryZotServer(settings.port);
+        }
+
+        console.log(data);
+
+        if (!!data) {
+            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
+                .map(item => new ZoteroItem(item));
+            console.log('items', data);
+            data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
+            return data;
+        } else {
+            this.context.postMessage({
+                title: 'Zotero not found',
+                description: 'Could not connect with Zotero. Is it running? Make sure to activate the Zotero 7 API or to install the ZotServer, if you are using Zotero 6.'
+            });
+        }
+    }
+
+    async tryZotero7(port: string){
+        const query = new URLSearchParams({
+            itemType: '-attachment',
+            q: ''
+        }).toString();
+
+        try {
+            const res = await fetch(`http://localhost:${port}/api/users/0/items?${query}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+    
+            const data = await res.json();
+            return data.map(item => item.data);
+        } catch (err) { }
+    }
 
-            data = await res.json();
-
-        } catch (e) { }
-
-        // zotero api is not working. Try to use zotserver
-        if (!data) {
-            try {
-                const res = await fetch(`http://localhost:23119/zotserver/search`, {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify([{
-                        condition: 'quicksearch-everything',
-                        value: ''
-                    }])
-                });
-        
-                data = await res.json();
-            } catch (e) {
-                this.context.postMessage({
-                    title: 'Zotero not found',
-                    description: 'Could not connect with Zotero. Is it running?'
-                });
-            }
-        }
-
-        if (!!data) {
+    async tryZotServer(port: string) {
+        try {
+            const res = await fetch(`http://localhost:${port}/zotserver/search`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify([{
+                    condition: 'quicksearch-everything',
+                    value: ''
+                }])
+            });
             
-            data = data.filter(item => item.data.itemType !== 'attachment' && item.data.itemType !== 'note').map(item => new ZoteroItem(item.data));
- 
-            data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
-                    
-            return data;
+            return await res.json();
+
+        } catch (err) {
+            return;
         }
+
     }
 }
