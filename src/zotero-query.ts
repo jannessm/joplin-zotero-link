@@ -128,6 +128,14 @@ export class ZoteroQuery {
                     'Content-Type': 'application/json'
                 }
             });
+
+            if (res.status === 500) {
+                this.context.postMessage({
+                    title: 'Zotero API not working',
+                    description: res.body
+                });
+                return;
+            }
     
             const data = await res.json();
             return data.map(item => item.data);
@@ -146,6 +154,14 @@ export class ZoteroQuery {
                     value: ''
                 }])
             });
+
+            if (res.status === 500) {
+                this.context.postMessage({
+                    title: 'Zotero API not working',
+                    description: res.body
+                });
+                return;
+            }
             
             return await res.json();
 
