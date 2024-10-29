@@ -22,7 +22,6 @@ joplin.plugins.register({
 		await joplin.contentScripts.onMessage(scriptId, async (msg) => {
 
 			if (msg === 'getSettings') {
-				console.log('received getSettings');
                 const settingValue = await joplin.settings.value(SETTING.Port);
                 return {
                     port: settingValue,
