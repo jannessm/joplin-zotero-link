@@ -22,10 +22,14 @@ joplin.plugins.register({
 		await joplin.contentScripts.onMessage(scriptId, async (msg) => {
 
 			if (msg === 'getSettings') {
-                const settingValue = await joplin.settings.value(SETTING.Port);
+				const port = await joplin.settings.value(SETTING.Port);
+				const cf = await joplin.settings.value(SETTING.CustomFormat);
+				const cfEnable = await joplin.settings.value(SETTING.CustomFormatEnable);
                 return {
-                    port: settingValue,
-                };
+					port: port,
+					customFormat: cf,
+					customFormatEnable: cfEnable
+				};
 			} else {
 				await dialogs.setHtml(error, `
 					<h1>${msg.title}</h1>
