@@ -41,6 +41,7 @@ Custom formattting of the text can be enabled from plugin settings.
 |  `<authorfirst>`               |        First author |
 |   `<title>`   |   Title |
 |  `<date>` | Date in local format         |
+|  `<date:YYYY-MM-DDTHH:mm:ss>` | Date with custom format (separator: `:-/T` and space) |
 |   `<year>`   |  Year    |
 |   `<month>`  | Month in `en-US` format |
 |   `<monthlocal>`  | Month in local format |

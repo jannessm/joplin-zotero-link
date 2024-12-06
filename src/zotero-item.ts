@@ -76,6 +76,11 @@ export class ZoteroItem {
       };
     }
 
+    two_digit_str_from_int(i: number): string {
+      if (i > 99) return i.toString();
+      return ("0" + i).slice(-2)
+    }
+
     format(customFormat: string) {
       let f = customFormat;
       let date = new Date(this.date);
@@ -95,6 +100,23 @@ export class ZoteroItem {
       f = f.replace("<url>", this.url);
       f = f.replace("<externallink>", `[&#x1F517;](${this.url})`);
       f = f.replace("<externaldoi>", `[&#x1F517;](https://doi.org/${this.doi})`);
+
+      const date_re = /<date:([YMDTHms\-:\/\ ]*)>/gm
+      let d_format;
+      let tf = f;
+      while((d_format = date_re.exec(f)) !== null) {
+        let format = d_format[1];
+        format = format.replace('YYYY', date.getUTCFullYear());
+        format = format.replace('MM', this.two_digit_str_from_int(date.getMonth() + 1));
+        format = format.replace('DD', this.two_digit_str_from_int(date.getDay() + 1));
+        format = format.replace('HH', this.two_digit_str_from_int(date.getHours()));
+        format = format.replace('mm', this.two_digit_str_from_int(date.getMinutes()));
+        format = format.replace('ss', this.two_digit_str_from_int(date.getSeconds()));
+        
+        tf = tf.replace(d_format[0], format);
+      }
+      f = tf;
+
       return f;
     }
 
