@@ -24,11 +24,9 @@ joplin.plugins.register({
 			if (msg === 'getSettings') {
 				const port = await joplin.settings.value(SETTING.Port);
 				const cf = await joplin.settings.value(SETTING.CustomFormat);
-				const cfEnable = await joplin.settings.value(SETTING.CustomFormatEnable);
                 return {
 					port: port,
-					customFormat: cf,
-					customFormatEnable: cfEnable
+					customFormat: cf
 				};
 			} else {
 				await dialogs.setHtml(error, `

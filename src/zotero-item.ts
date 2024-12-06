@@ -97,14 +97,7 @@ export class ZoteroItem {
     }
 
     apply(view: EditorView, completion: Completion, from: number, to: number) {
-      let replacement;
-      if (this.settings.customFormatEnable){
-        const customFormat = this.settings.customFormat;
-        replacement = this.format(customFormat);
-      } else {
-        replacement = `[${this.title}](zotero://select/library/items/${this.key})`;
-      }
-      
+      const replacement = this.format(this.settings.customFormat);
 
       const replaceTransaction = view.state.update({
         changes: {
