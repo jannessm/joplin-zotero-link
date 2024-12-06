@@ -42,6 +42,8 @@ Custom formattting of the text can be enabled from plugin settings.
 |   `<title>`   |   Title |
 |  `<date>` | Date in local format         |
 |   `<year>`   |  Year    |
+|   `<month>`  | Month in `en-US` format |
+|   `<monthlocal>`  | Month in local format |
 |   `<publication>`  |   Publication journal   |
 |   `<publicationshort>` |  Short version of publication journal  |
 |  `<doi>`        |   DOI    |

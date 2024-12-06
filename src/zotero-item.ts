@@ -85,12 +85,14 @@ export class ZoteroItem {
       f = f.replace("<authorfirst>", this.creatorFirst)
       f = f.replace("<title>", this.title);
       f = f.replace("<date>", date.toLocaleDateString(undefined));
-      f = f.replace("<year>", date.toLocaleDateString(undefined, {year: "numeric"}))
+      f = f.replace("<year>", date.toLocaleDateString(undefined, {year: "numeric"}));
+      f = f.replace("<month>", date.toLocaleDateString("en-US", {month: "long"}));
+      f = f.replace("<monthlocal>", date.toLocaleDateString(undefined, {month: "long"}))
       f = f.replace("<publication>", this.publication);
       f = f.replace("<publicationshort>", this.publicationShort);
       f = f.replace("<doi>", this.doi);
       f = f.replace("<doiurl>", `https://doi.org/${this.doi}`);
-      f = f.replace("<url>", this.url)
+      f = f.replace("<url>", this.url);
       f = f.replace("<externallink>", `[&#x1F517;](${this.url})`);
       f = f.replace("<externaldoi>", `[&#x1F517;](https://doi.org/${this.doi})`);
       return f;
