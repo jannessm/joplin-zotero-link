@@ -21,9 +21,9 @@ export class ZoteroItem {
     doi: string;
     url: string;
 
-    settings;
+    customFormat;
 
-    constructor(item, settings) {
+    constructor(item, customFormat) {
       this.key = item.key;
 
       this.title = item.title || '';
@@ -41,7 +41,7 @@ export class ZoteroItem {
       this.doi = item.DOI || '';
       this.url = item.url || '';
 
-      this.settings = settings;
+      this.customFormat = customFormat;
     }
 
     static parseCreators(creators) {
@@ -97,7 +97,7 @@ export class ZoteroItem {
     }
 
     apply(view: EditorView, completion: Completion, from: number, to: number) {
-      const replacement = this.format(this.settings.customFormat);
+      const replacement = this.format(this.customFormat);
 
       const replaceTransaction = view.state.update({
         changes: {
