@@ -3,6 +3,8 @@ import { EditorView } from "@codemirror/view";
 import { Annotation, AnnotationType, ChangeSet, Text } from "@codemirror/state";
 import { Editor } from "codemirror";
 
+import * as dayjs from 'dayjs';
+
 export class ZoteroItem {
     key: string;
 
@@ -101,23 +103,14 @@ export class ZoteroItem {
       f = f.replace("<externallink>", `[&#x1F517;](${this.url})`);
       f = f.replace("<externaldoi>", `[&#x1F517;](https://doi.org/${this.doi})`);
 
-      const date_re = /<date:([YMDTHms\-:\/\ ]*)>/gm
+      // Parse date with regex and dayjs library
+      const date_re = /<date:([^>]*)>/gm;
+      let tf = f; // Store the format to iterate while replacing date
       let d_format;
-      let tf = f;
       while((d_format = date_re.exec(f)) !== null) {
-        let format = d_format[1];
-        format = format.replace('YYYY', date.getUTCFullYear());
-        format = format.replace('MM', this.two_digit_str_from_int(date.getMonth() + 1));
-        format = format.replace('DD', this.two_digit_str_from_int(date.getDay() + 1));
-        format = format.replace('HH', this.two_digit_str_from_int(date.getHours()));
-        format = format.replace('mm', this.two_digit_str_from_int(date.getMinutes()));
-        format = format.replace('ss', this.two_digit_str_from_int(date.getSeconds()));
-        
-        tf = tf.replace(d_format[0], format);
+        tf = tf.replace(d_format[0], dayjs(date).format(d_format[1]).toString());
       }
-      f = tf;
-
-      return f;
+      return tf;
     }
 
     apply(view: EditorView, completion: Completion, from: number, to: number) {
