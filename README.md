@@ -20,7 +20,7 @@ Conntect Zotero with Joplin to reference sources in notes and open them via `zot
 2. Search for your reference
 3. Select it
 
-### Custom text for links
+### Custom Formatting
 
 Custom formattting of the text can be enabled from plugin settings.
 
@@ -52,3 +52,9 @@ Custom formattting of the text can be enabled from plugin settings.
 |  `<url>` | External url    |
 |  `<externallink>`   |  Give external link with icon 🔗 `[&#x1F517;](<url>)` |
 |  `<externaldoi>`   |  Give external DOI link with icon 🔗 `[&#x1F517;](<doilink>)` |
+
+## FAQ
+
+### Zotero crashes after installation
+
+Please have a look at this [issues](https://github.com/jannessm/joplin-zotero-link/issues/20), if it helps. Otherwise create a new one.
