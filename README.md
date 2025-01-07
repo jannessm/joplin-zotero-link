@@ -2,6 +2,8 @@
 
 Conntect Zotero with Joplin to reference sources in notes and open them via `zotero://` links.
 
+When having trouble using this plugin, please have a look down below to the FAQ.
+
 ## Installation
 
 ### Zotero >= 7
@@ -55,6 +57,10 @@ Custom formattting of the text can be enabled from plugin settings.
 
 ## FAQ
 
-### Zotero crashes after installation
+### Joplin crashes after installation
 
-Please have a look at this [issues](https://github.com/jannessm/joplin-zotero-link/issues/20), if it helps. Otherwise create a new one.
+- using CodeMirror v5 (only supported up to v1.2.1) (#17, #18, #20, #22)
+
+### No Zotero Data could be loaded
+
+- check if the port is correct under the plugin settings (#3, #4, #6)

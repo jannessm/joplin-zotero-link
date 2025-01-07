@@ -60,25 +60,27 @@ export class ZoteroQuery {
 
         let data;
 
-        try {
-            data = await this.tryZotero7(settings.port);
+        data = await this.tryZotero7(settings.port);
+
+        // zotero api is not working. Try to use zotserver
+        if (!data) {
+            data = await this.tryZotServer(settings.port);
+        }
+
+        if (!!data) {
+            data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
+                .map(item => new ZoteroItem(item, settings.customFormat));
     
-            // zotero api is not working. Try to use zotserver
-            if (!data) {
-                data = await this.tryZotServer(settings.port);
-            }
-        } catch {
+            data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
+            return data;
+        } else {
             this.context.postMessage({
                 title: 'Loading Zotero data failed.',
                 description: 'Data could not be loaded from Zotero. Please check if Zotero is running with the correct port set in your settings. Otherwise a broken reference in your library could be an issue. Please have a look at existing github issues to find more help.'
             });
+
+            return [];
         }
-
-        data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
-            .map(item => new ZoteroItem(item, settings.customFormat));
-
-        data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
-        return data;
     }
 
     async tryZotero7(port: string){

@@ -9,16 +9,22 @@ module.exports = {
                 if (!value) return;
                 const zq = new ZoteroQuery(context, cm);
                 
-                console.log(CodeMirror);
-                CodeMirror.addExtension([
-                    CodeMirror.joplinExtensions.completionSource(
-                      zq.getCompletions()
-                    ),
-                    
-                    // Joplin also exposes a Facet that allows enabling or disabling CodeMirror's
-                    // built-in autocompletions. These apply, for example, to HTML tags.
-                    CodeMirror.joplinExtensions.enableLanguageDataAutocomplete.of(true)
-                ]);
+                try {
+                    CodeMirror.addExtension([
+                        CodeMirror.joplinExtensions.completionSource(
+                          zq.getCompletions()
+                        ),
+                        
+                        // Joplin also exposes a Facet that allows enabling or disabling CodeMirror's
+                        // built-in autocompletions. These apply, for example, to HTML tags.
+                        CodeMirror.joplinExtensions.enableLanguageDataAutocomplete.of(true)
+                    ]);
+                } catch {
+                    this.context.postMessage({
+                        title: 'Zotero Link could not be initialized.',
+                        description: 'You are probably using a CodeMirror v5 which is only supported by ZoteroLink<=1.2.1.'
+                    });
+                }
             });
         };
 
