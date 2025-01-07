@@ -59,8 +59,8 @@ Custom formattting of the text can be enabled from plugin settings.
 
 ### Joplin crashes after installation
 
-- using CodeMirror v5 (only supported up to v1.2.1) (#17, #18, #20, #22)
+- using CodeMirror v5 (only supported up to v1.2.1) ([#17](https://github.com/jannessm/joplin-zotero-link/issues/17), [#18](https://github.com/jannessm/joplin-zotero-link/issues/18), [#20](https://github.com/jannessm/joplin-zotero-link/issues/20), [#22](https://github.com/jannessm/joplin-zotero-link/issues/22))
 
 ### No Zotero Data could be loaded
 
-- check if the port is correct under the plugin settings (#3, #4, #6)
+- check if the port is correct under the plugin settings ([#3](https://github.com/jannessm/joplin-zotero-link/issues/3), [#4](https://github.com/jannessm/joplin-zotero-link/issues/4), [#6](https://github.com/jannessm/joplin-zotero-link/issues/6))
