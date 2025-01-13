@@ -9,6 +9,7 @@ module.exports = {
                 if (!value) return;
                 const zq = new ZoteroQuery(context, cm);
                 
+                 
                 try {
                     CodeMirror.addExtension([
                         CodeMirror.joplinExtensions.completionSource(
@@ -31,7 +32,8 @@ module.exports = {
         return {
             plugin,
             codeMirrorOptions: {
-                'zoteroLink': true
+                'zoteroLink': true,
+                
             },
             assets: () => {
                 return [

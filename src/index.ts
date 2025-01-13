@@ -24,9 +24,15 @@ joplin.plugins.register({
 			if (msg === 'getSettings') {
 				const port = await joplin.settings.value(SETTING.Port);
 				const cf = await joplin.settings.value(SETTING.CustomFormat);
+				const chf = await joplin.settings.value(SETTING.CustomHintFormat);
+				const cs = await joplin.settings.value(SETTING.CitationStyle);
+				const chs = await joplin.settings.value(SETTING.CustomHintSort);
                 return {
 					port: port,
-					customFormat: cf
+					customFormat: cf,
+					customHintFormat: chf,
+					citationStyle: cs,
+					customHintSort: chs, 
 				};
 			} else {
 				await dialogs.setHtml(error, `
