@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "ts-prepare",
+			"problemMatcher": [],
+			"label": "npm: ts-prepare",
+			"detail": "npm run stopJop && npm run dist && npm run replace"
+		},
+		{
+			"type": "npm",
+			"script": "tsprepare",
+			"problemMatcher": [],
+			"label": "npm: tsprepare",
+			"detail": "npm run stopJop && npm run dist && npm run replace"
+		}
+	]
+}
