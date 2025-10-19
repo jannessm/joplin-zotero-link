@@ -40,7 +40,7 @@ export class ZoteroQuery {
             return {
                 from: word.from + 2,
                 options: that.zoteroItems.map(item => item.getHint())
-            }  
+            }
         }
     }
 
@@ -70,20 +70,24 @@ export class ZoteroQuery {
         if (!!data) {
             data = data.filter(item => item.itemType !== 'attachment' && item.itemType !== 'note')
                 .map(item => new ZoteroItem(item, settings.customFormat));
-    
+
             data.sort((a: ZoteroItem, b: ZoteroItem) => a.title.localeCompare(b.title));
             return data;
         } else {
-            this.context.postMessage({
-                title: 'Loading Zotero data failed.',
-                description: 'Data could not be loaded from Zotero. Please check if Zotero is running with the correct port set in your settings. Otherwise a broken reference in your library could be an issue. Please have a look at existing github issues to find more help.'
-            });
+            // Do not show a popup on load failure. Return a single special ZoteroItem
+            // that will appear in completions to indicate the error only when the user queries.
+            const errorItem = new ZoteroItem({
+                itemType: 'computerProgram',
+                title: '⚠️ Data could not be loaded from Zotero.\nPlease check if Zotero is running with the correct port set in your settings.\nOtherwise a broken reference in your library could be an issue.\nPlease have a look at existing github issues to find more help.',
+                key: '__zotero_data_error__',
+                creators: []
+            }, settings.customFormat);
 
-            return [];
+            return [errorItem];
         }
     }
 
-    async tryZotero7(port: string){
+    async tryZotero7(port: string) {
         const query = new URLSearchParams({
             itemType: '-attachment',
             q: ''
@@ -104,7 +108,7 @@ export class ZoteroQuery {
                 });
                 return;
             }
-    
+
             const data = await res.json();
             return data.map(item => item.data);
         } catch (err) { }
@@ -130,7 +134,7 @@ export class ZoteroQuery {
                 });
                 return;
             }
-            
+
             return await res.json();
 
         } catch (err) {
