@@ -28,7 +28,7 @@ export const registerSettings = async () => {
             public: true,
             type: SettingItemType.String,
             label: 'Custom format',
-            description: 'Customize the text links using variables such as <author>, <title> and <date>.'
+            description: 'Customize the text links using variables such as <authors>, <title> and <date>.'
         },
     });
 };
