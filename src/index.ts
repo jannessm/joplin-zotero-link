@@ -1,6 +1,6 @@
 import joplin from 'api';
 import { ContentScriptType } from 'api/types';
-import * as http from 'http';
+import { request } from 'http';
 
 import { registerSettings, SETTING } from './settings';
 
@@ -28,7 +28,7 @@ async function getSettings(): Promise<ZoteroSettings> {
 async function requestJson(url: string, options: JsonRequestOptions = {}): Promise<any | undefined> {
 	return new Promise<any | undefined>((resolve) => {
 		try {
-			const req = http.request(url, {
+			const req = request(url, {
 				method: options.method || 'GET',
 				headers: options.headers || {},
 			}, (res) => {
